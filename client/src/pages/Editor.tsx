@@ -9,6 +9,8 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { updateFullCode } from '@/redux/slices/CodeSlices'
 import toast from 'react-hot-toast'
+import { useLoadCodeMutation } from '@/redux/slices/api'
+import Loader from '@/components/Loaders/Loader'
 
 const Editor = () => {
 
@@ -16,20 +18,25 @@ const Editor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
+  const [loadCodeProgram, { isLoading }] = useLoadCodeMutation()
+
   const loadCode = async () => {
     try {
       if (id) {
-        const response = await axios.get(`http://localhost:4000/editor/load/${id}`);
-        dispatch(updateFullCode(response.data.fullCode));
+        const response = await loadCodeProgram(id).unwrap()
+        dispatch(updateFullCode(response.fullCode));
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error?.response?.status == 500) {
-          toast.error("Not Found")
-          navigate("/editor")
-        }
-      }
+      // if (axios.isAxiosError(error)) {
+      //   if (error?.response?.status == 500) {
+      //     toast.error("Not Found")
+      //     navigate("/editor")
+      //   }
+      // }
+
+      console.log(error)
       handleError(error);
+      navigate("/editor")
     }
   };
 
@@ -38,6 +45,13 @@ const Editor = () => {
       loadCode();
     }
   }, [id]);
+
+  if (isLoading)
+    return (
+      <div className="w-full h-[calc(100dvh-60px)] flex justify-center items-center">
+        <Loader />
+      </div>
+    );
 
   return (
     <ResizablePanelGroup direction="horizontal">

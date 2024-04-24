@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import { EditorRouter } from "./routes/EditorRoutes";
 import { dbConnect } from "./lib/dbConnect";
+import { UserRouter } from "./routes/UserRoutes";
 require('dotenv').config();
 
 
@@ -12,6 +13,7 @@ app.use(cors());
 dbConnect()
 
 app.use("/editor", EditorRouter)
+app.use("/auth", UserRouter)
 
 
 

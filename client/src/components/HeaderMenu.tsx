@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from './ui/input'
 import toast from 'react-hot-toast'
+import { useSaveCodeMutation } from '@/redux/slices/api'
 
 const HeaderMenu = () => {
 
@@ -18,24 +19,17 @@ const HeaderMenu = () => {
   const dispatch = useDispatch()
   const currentLanguage = useSelector((state: RootState) => state.CodeSlices.currentLanguage);
   const fullCode = useSelector((state: RootState) => state.CodeSlices.fullCode)
-  const [saveLoading, setSaveLoading] = useState<boolean>(false)
   const [shareBtn, setShareBtn] = useState<boolean>(false);
 
+  const [saveCode, { isLoading }] = useSaveCodeMutation();
+
   const handleSaveCode = async () => {
-    setSaveLoading(true)
+    const body = { fullCode: fullCode };
     try {
-
-      const response = await axios.post("http://localhost:4000/editor/save", {
-        fullCode
-      })
-
-      console.log(response.data)
-      navigate(`/editor/${response.data.url}`, { replace: true });
-
+      const response = await saveCode(body).unwrap();
+      navigate(`/editor/${response.url}`, { replace: true });
     } catch (error) {
       handleError(error);
-    } finally {
-      setSaveLoading(false)
     }
   }
 
@@ -51,7 +45,7 @@ const HeaderMenu = () => {
   return (
     <div className='__helper_header h-[50px] bg-black text-white p-2 flex justify-between items-center'>
       <div className="__btn_container flex gap-1">
-        <Button onClick={handleSaveCode} disabled={saveLoading} variant="success" className='flex justify-between items-center gap-1'>{saveLoading ? <Loader className='animate-spin' /> : <><Save /> Save</>}</Button>
+        <Button onClick={handleSaveCode} disabled={isLoading} variant="success" className='flex justify-between items-center gap-1'>{isLoading ? <Loader className='animate-spin' /> : <><Save /> Save</>}</Button>
         {shareBtn && (
           <Dialog>
             <DialogTrigger asChild>

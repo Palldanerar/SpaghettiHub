@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import Editor from './pages/Editor'
 import NotFound from './pages/NotFound'
 import { ThemeProvider } from './components/theme-provider'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 
 const App = () => {
   return (
@@ -14,6 +16,8 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/editor' element={<Editor />} />
           <Route path='/editor/:id' element={<Editor />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ThemeProvider>
