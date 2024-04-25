@@ -6,8 +6,11 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { handleError } from '@/utils/handleError';
+import { useLoginMutation } from '@/redux/slices/api';
+import { useDispatch } from 'react-redux';
+import { updateCurrentUser, updateIsLoggedIn } from '@/redux/slices/AppSlice';
 
 const formSchema = z.object({
     username: z.string(),
@@ -15,6 +18,10 @@ const formSchema = z.object({
 });
 
 const Login = () => {
+
+    const [login, { isLoading }] = useLoginMutation()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -26,7 +33,10 @@ const Login = () => {
 
     async function handleLogin(value: z.infer<typeof formSchema>) {
         try {
-            console.log(value)
+            const response = await login(value).unwrap();
+            dispatch(updateCurrentUser(response))
+            dispatch(updateIsLoggedIn(true))
+            navigate("/")
         } catch (error) {
             handleError(error);
         }
@@ -54,6 +64,7 @@ const Login = () => {
                                             required
                                             placeholder="Username or Email"
                                             {...field}
+                                            disabled={isLoading}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -71,13 +82,14 @@ const Login = () => {
                                             type="password"
                                             placeholder="Password"
                                             {...field}
+                                            disabled={isLoading}
                                         />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button className="w-full" type="submit">
+                        <Button className="w-full" type="submit" disabled={isLoading}>
                             Login
                         </Button>
                     </form>

@@ -27,14 +27,6 @@ const Editor = () => {
         dispatch(updateFullCode(response.fullCode));
       }
     } catch (error) {
-      // if (axios.isAxiosError(error)) {
-      //   if (error?.response?.status == 500) {
-      //     toast.error("Not Found")
-      //     navigate("/editor")
-      //   }
-      // }
-
-      console.log(error)
       handleError(error);
       navigate("/editor")
     }

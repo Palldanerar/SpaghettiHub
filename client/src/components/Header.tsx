@@ -1,8 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from './ui/button'
+import { RootState } from '@/redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLogoutMutation } from '@/redux/slices/api'
+import { updateCurrentUser, updateIsLoggedIn } from '@/redux/slices/AppSlice'
+import { handleError } from '@/utils/handleError'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 
 const Header = () => {
+
+  const [logout, { isLoading }] = useLogoutMutation()
+  const isLoggedIn = useSelector((state: RootState) => state.AppSlice.isLoggedIn)
+  const currentUser = useSelector((state: RootState) => state.AppSlice.currentUser);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  async function handleLogout() {
+    try {
+      await logout().unwrap();
+      dispatch(updateIsLoggedIn(false));
+      dispatch(updateCurrentUser({}));
+      navigate("/")
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
   return (
     <nav className="w-full h-[60px] bg-gray-900 text-white p-3 flex justify-between items-center">
       <Link to="/">
@@ -14,18 +39,43 @@ const Header = () => {
             <Button variant="secondary">Editor</Button>
           </Link>
         </li>
-        <li>
-          <Link to="/login">
-            <Button variant="blue">Login</Button>
-          </Link>
-        </li>
-        <li>
-          <Link to="/signup">
-            <Button variant="blue">Signup</Button>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+        {isLoggedIn ? (
+          <>
+            <li>
+              <Link to="/my-codes">
+                <Button variant="blue">My Codes</Button>
+              </Link>
+            </li>
+            <li>
+              <Button onClick={handleLogout} disabled={isLoading} variant="destructive">
+                Logout
+              </Button>
+            </li>
+            <li>
+              <Avatar>
+                <AvatarImage src={currentUser.picture} />
+                <AvatarFallback className="capitalize">
+                  {currentUser.username?.slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/login">
+                <Button variant="blue">Login</Button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup">
+                <Button variant="blue">Signup</Button>
+              </Link>
+            </li>
+          </>
+        )}
+      </ul >
+    </nav >
   )
 }
 

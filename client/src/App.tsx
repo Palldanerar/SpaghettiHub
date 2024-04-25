@@ -6,8 +6,26 @@ import NotFound from './pages/NotFound'
 import { ThemeProvider } from './components/theme-provider'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-
+import { useGetUserDetailsQuery } from './redux/slices/api'
+import { useDispatch } from 'react-redux'
+import { updateCurrentUser, updateIsLoggedIn } from './redux/slices/AppSlice'
+import { useEffect } from 'react'
 const App = () => {
+
+  // @ts-ignore
+  const { data, error } = useGetUserDetailsQuery()
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(updateCurrentUser(data));
+      dispatch(updateIsLoggedIn(true));
+    } else if (error) {
+      dispatch(updateCurrentUser({}));
+      dispatch(updateIsLoggedIn(false));
+    }
+  }, [data, error]);
+
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
