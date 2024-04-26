@@ -8,6 +8,7 @@ export interface CodeSliceStateInterface {
         javascript: string,
     }
     currentLanguage: "html" | "css" | "javascript",
+    isOwner: boolean;
 }
 
 const initialState: CodeSliceStateInterface = {
@@ -17,6 +18,7 @@ const initialState: CodeSliceStateInterface = {
         javascript: ""
     },
     currentLanguage: "html",
+    isOwner: false,
 };
 
 const CodeSlice = createSlice({
@@ -32,8 +34,11 @@ const CodeSlice = createSlice({
         updateFullCode: (state, action: PayloadAction<CodeSliceStateInterface["fullCode"]>) => {
             state.fullCode = action.payload
         },
+        updateIsOwner: (state, action: PayloadAction<boolean>) => {
+            state.isOwner = action.payload;
+        },
     },
 });
 
 export default CodeSlice.reducer;
-export const { updateCurrentLanguage, updateCodeValue, updateFullCode } = CodeSlice.actions;
+export const { updateCurrentLanguage, updateCodeValue, updateFullCode, updateIsOwner } = CodeSlice.actions;

@@ -5,10 +5,8 @@ import HeaderMenu from '@/components/HeaderMenu'
 import CodeRender from '@/components/CodeRender'
 import { useNavigate, useParams } from 'react-router-dom'
 import { handleError } from '@/utils/handleError'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { updateFullCode } from '@/redux/slices/CodeSlices'
-import toast from 'react-hot-toast'
+import { updateFullCode, updateIsOwner } from '@/redux/slices/CodeSlices'
 import { useLoadCodeMutation } from '@/redux/slices/api'
 import Loader from '@/components/Loaders/Loader'
 
@@ -25,6 +23,7 @@ const Editor = () => {
       if (id) {
         const response = await loadCodeProgram(id).unwrap()
         dispatch(updateFullCode(response.fullCode));
+        dispatch(updateIsOwner(response.isOwner));
       }
     } catch (error) {
       handleError(error);

@@ -7,6 +7,7 @@ import { useLogoutMutation } from '@/redux/slices/api'
 import { updateCurrentUser, updateIsLoggedIn } from '@/redux/slices/AppSlice'
 import { handleError } from '@/utils/handleError'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { updateIsOwner } from '@/redux/slices/CodeSlices'
 
 
 const Header = () => {
@@ -19,9 +20,11 @@ const Header = () => {
 
   async function handleLogout() {
     try {
+      //@ts-ignore
       await logout().unwrap();
       dispatch(updateIsLoggedIn(false));
       dispatch(updateCurrentUser({}));
+      dispatch(updateIsOwner(false));
       navigate("/")
     } catch (error) {
       handleError(error);
@@ -34,6 +37,11 @@ const Header = () => {
         <h2 className="font-bold select-none">SpaghettiHub</h2>
       </Link>
       <ul className="flex gap-2">
+        <li>
+          <Link to="/all-codes">
+            <Button variant="secondary">All Codes</Button>
+          </Link>
+        </li>
         <li>
           <Link to="/editor">
             <Button variant="secondary">Editor</Button>

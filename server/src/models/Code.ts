@@ -6,6 +6,9 @@ interface ICodeSchema {
         css: string;
         javascript: string;
     };
+    title: string;
+    ownerInfo: mongoose.Types.ObjectId | string;
+    ownerName: string;
 }
 
 const CodeSchema = new mongoose.Schema<ICodeSchema>({
@@ -13,7 +16,10 @@ const CodeSchema = new mongoose.Schema<ICodeSchema>({
         html: String,
         css: String,
         javascript: String,
-    }
+    },
+    title: String,
+    ownerInfo: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    ownerName: String,
 });
 
 export const Code = mongoose.model("Code", CodeSchema);

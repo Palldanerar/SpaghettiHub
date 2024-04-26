@@ -5,6 +5,7 @@ export const api = createApi({
         baseUrl: "http://localhost:4000",
         credentials: "include",
     }),
+    tagTypes: ["myCodes", "allCodes"],
     endpoints: (builder) => ({
         saveCode: builder.mutation({
             query: (fullCode) => {
@@ -14,6 +15,7 @@ export const api = createApi({
                     body: fullCode,
                 };
             },
+            invalidatesTags: ["myCodes", "allCodes"],
         }),
         loadCode: builder.mutation({
             query: (id) => {
@@ -51,7 +53,47 @@ export const api = createApi({
                 cache: "no-store"
             }),
         }),
+        getAllCodes: builder.query({
+            query: () => ({
+                url: "/editor/all",
+                cache: "no-store",
+            }),
+            providesTags: ["allCodes"],
+        }),
+        getMyCodes: builder.query({
+            query: () => ({
+                url: "/editor/my-code",
+                cache: "no-store",
+            }),
+            providesTags: ["myCodes"],
+        }),
+        deleteCode: builder.mutation({
+            query: (_id) => ({
+                url: `/editor/delete/${_id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["myCodes", "allCodes"],
+        }),
+        editCode: builder.mutation({
+            query: ({ fullCode, id }) => {
+                return {
+                    url: `/editor/edit/${id}`,
+                    method: "PUT",
+                    body: fullCode,
+                };
+            },
+        }),
     })
 })
 
-export const { useSaveCodeMutation, useLoadCodeMutation, useSignupMutation, useLoginMutation, useLogoutMutation, useGetUserDetailsQuery } = api;
+export const { useSaveCodeMutation,
+    useLoadCodeMutation,
+    useSignupMutation,
+    useLoginMutation,
+    useLogoutMutation,
+    useGetUserDetailsQuery,
+    useGetAllCodesQuery,
+    useGetMyCodesQuery,
+    useDeleteCodeMutation,
+    useEditCodeMutation
+} = api;
