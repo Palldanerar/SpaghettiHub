@@ -5,7 +5,7 @@ export const api = createApi({
         baseUrl: "http://localhost:4000",
         credentials: "include",
     }),
-    tagTypes: ["myCodes", "allCodes"],
+    tagTypes: ["myCodes", "allCodes", "updateUser"],
     endpoints: (builder) => ({
         saveCode: builder.mutation({
             query: (fullCode) => {
@@ -53,6 +53,14 @@ export const api = createApi({
                 cache: "no-store"
             }),
         }),
+        updateUser: builder.mutation({
+            query: (body) => ({
+                url: "/auth/update",
+                method: "POST",
+                body: body
+            }),
+            invalidatesTags: ["updateUser"],
+        }),
         getAllCodes: builder.query({
             query: () => ({
                 url: "/editor/all",
@@ -95,5 +103,6 @@ export const { useSaveCodeMutation,
     useGetAllCodesQuery,
     useGetMyCodesQuery,
     useDeleteCodeMutation,
-    useEditCodeMutation
+    useEditCodeMutation,
+    useUpdateUserMutation
 } = api;

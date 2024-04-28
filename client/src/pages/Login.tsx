@@ -36,7 +36,7 @@ const Login = () => {
             const response = await login(value).unwrap();
             dispatch(updateCurrentUser(response))
             dispatch(updateIsLoggedIn(true))
-            navigate("/")
+            navigate("/profile")
         } catch (error) {
             handleError(error);
         }

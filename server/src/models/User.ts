@@ -4,6 +4,7 @@ interface IUserSchema {
     username: string;
     email: string;
     password: string;
+    bio: string;
     picture: string;
     savedCodes: Array<mongoose.Types.ObjectId>;
 }
@@ -27,9 +28,13 @@ const UserSchema = new mongoose.Schema<IUserSchema>(
             required: true,
             trim: true,
         },
+        bio: {
+            type: String,
+            trim: true,
+        },
         picture: {
             type: String,
-            default: "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
+            default: "uploads\avatars\default.jpg",
         },
         savedCodes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Code" }],
     },

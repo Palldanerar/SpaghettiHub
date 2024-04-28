@@ -6,6 +6,7 @@ export interface appSliceState {
         picture?: string;
         email?: string;
         savedCodes?: string[];
+        bio?: string;
     };
     isLoggedIn: boolean;
 }

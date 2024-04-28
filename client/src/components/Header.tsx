@@ -60,12 +60,14 @@ const Header = () => {
               </Button>
             </li>
             <li>
-              <Avatar>
-                <AvatarImage src={currentUser.picture} />
-                <AvatarFallback className="capitalize">
-                  {currentUser.username?.slice(0, 2)}
-                </AvatarFallback>
-              </Avatar>
+              <Link to="/profile">
+                <Avatar className='cursor-pointer'>
+                  <AvatarImage src={`http://localhost:4000/${currentUser.picture}`} />
+                  <AvatarFallback className="capitalize">
+                    {currentUser.username?.slice(0, 2)}
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
             </li>
           </>
         ) : (

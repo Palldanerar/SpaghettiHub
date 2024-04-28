@@ -12,6 +12,7 @@ import { updateCurrentUser, updateIsLoggedIn } from './redux/slices/AppSlice'
 import { useEffect } from 'react'
 import AllCodes from './pages/AllCodes'
 import MyCodes from './pages/MyCodes'
+import Profile from './pages/Profile'
 const App = () => {
 
   // @ts-ignore
@@ -41,6 +42,7 @@ const App = () => {
           <Route path='/all-codes' element={<AllCodes />} />
           <Route path='/my-codes' element={<MyCodes />} />
           <Route path="*" element={<NotFound />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
       </ThemeProvider>
     </>

@@ -54,6 +54,7 @@ export const singup = async (req: Request, res: Response) => {
             picture: newUser.picture,
             email: newUser.email,
             savedCodes: newUser.savedCodes,
+            bio: newUser.bio,
         });
 
     } catch (error) {
@@ -109,6 +110,7 @@ export const login = async (req: Request, res: Response) => {
             picture: existingUser.picture,
             email: existingUser.email,
             savedCodes: existingUser.savedCodes,
+            bio: existingUser.bio
         });
     } catch (error) {
         return res.status(500).send({ message: "Error log in!", error: error });
@@ -137,8 +139,46 @@ export const userDetails = async (req: AuthRequest, res: Response) => {
             picture: user.picture,
             email: user.email,
             savedCodes: user.savedCodes,
+            bio: user.bio
         });
     } catch (error) {
         return res.status(500).send({ message: "Cannot fetch user details" });
     }
 };
+
+export const updateProfile = async (req: AuthRequest, res: Response) => {
+    const userId = req._id;
+
+    console.log(userId)
+
+    const { username, bio } = req.body;
+    // @ts-ignore
+    const avatar = req?.file.path;
+
+    console.log(avatar)
+
+    try {
+
+        let user = await User.findById(userId);
+
+        console.log(user)
+
+        if (!user) {
+            return res.status(404).send({ message: "Cannot find the user!" });
+        }
+
+        await User.updateOne({
+            _id: userId
+        },{
+            username,
+            bio,
+            picture: avatar,
+        })
+
+        user = await User.findById(userId);
+
+        return res.status(200).send(user);
+    } catch (error) {
+        return res.status(500).send({ message: "Cannot fetch user details" });
+    }
+}

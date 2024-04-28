@@ -114,9 +114,7 @@ export const deleteCode = async (req: AuthRequest, res: Response) => {
         }
 
         if (existingCode.ownerName !== owner.username) {
-            return res
-                .status(400)
-                .send({ message: "You don't have permission to delete this code!" });
+            return res.status(400).send({ message: "You don't have permission to delete this code!" });
         }
 
         const deleteCode = await Code.findByIdAndDelete(id);
@@ -149,9 +147,7 @@ export const editCode = async (req: AuthRequest, res: Response) => {
         }
 
         if (existingPost.ownerName !== owner.username) {
-            return res
-                .status(400)
-                .send({ message: "You don't have permission to edit this post!" });
+            return res.status(400).send({ message: "You don't have permission to edit this post!" });
         }
 
         await Code.findByIdAndUpdate(postId, {

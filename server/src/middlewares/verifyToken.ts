@@ -2,11 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
-    _id?: string;
+    _id?: string,
 }
 
 export const verifyToken = async (req: AuthRequest, res: Response, next: NextFunction) => {
     const token = req.cookies.token;
+
+    console.log(token)
 
     if (!token) {
         return res.status(401).send({ message: "You are unauthorized." });
