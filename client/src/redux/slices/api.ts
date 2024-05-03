@@ -22,7 +22,6 @@ export const api = createApi({
                 return {
                     url: `/editor/load/${id}`,
                     method: "GET",
-
                 }
             }
         }),
@@ -91,6 +90,12 @@ export const api = createApi({
                 };
             },
         }),
+        getUser: builder.mutation({
+            query: (id) => ({
+                url: `/auth/${id}`,
+                method: "GET",
+            })
+        })
     })
 })
 
@@ -104,5 +109,6 @@ export const { useSaveCodeMutation,
     useGetMyCodesQuery,
     useDeleteCodeMutation,
     useEditCodeMutation,
-    useUpdateUserMutation
+    useUpdateUserMutation,
+    useGetUserMutation
 } = api;

@@ -1,73 +1,36 @@
 import { Code, Trash2 } from 'lucide-react'
 import { Separator } from "@/components/ui/separator"
-import { Button } from './ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { Link } from 'react-router-dom';
-import { handleError } from '@/utils/handleError';
-import { useDeleteCodeMutation } from '@/redux/slices/api';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Link } from 'react-router-dom'
 
 interface CodeItemProps {
     title: string,
-    _id: string,
-    isDelete?: boolean
+    _id?: string,
+    owner?: Object,
 }
 
-const CodeItem = ({ title, _id, isDelete }: CodeItemProps) => {
-
-    const [deleteCode, { isLoading }] = useDeleteCodeMutation();
-
-    const handleDelete = async () => {
-        try {
-            const response = await deleteCode(_id!).unwrap();
-            console.log(response);
-        } catch (error) {
-            handleError(error);
-        }
-    };
+const CodeItem = ({ title, _id, owner }: CodeItemProps) => {
 
     return (
         <div className="p-3 rounded cursor-pointer bg-slate-900 flex justify-start items-center flex-col gap-3">
-            <div className="__top flex justify-start items-start gap-3 w-full">
-                <Code />
-                <p className="font-mono font-bold text-lg">{title}</p>
-            </div>
+            <Link to={`/editor/${_id}`}>
+                <div className="__top flex justify-start items-start gap-3 w-full">
+                    <Code />
+                    <p className="font-mono font-bold text-lg">{title}</p>
+                </div>
+            </Link>
             <Separator />
-            <div className="flex gap-3">
-                <Link to={`/editor/${_id}`}>
-                    <Button variant="secondary">Open Code</Button>
-                </Link>
-                {isDelete && (
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button variant="destructive">
-                                Delete
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle className="flex gap-1 justify-center items-center">
-                                    <Trash2 />
-                                    Delete Code confirmation!
-                                </DialogTitle>
-                                <div className="__url flex justify-center items-center flex-col gap-1">
-                                    <p>
-                                        Are you sure, that you want to delete this code, this action
-                                        is not reversible.
-                                    </p>
-                                    <Button
-                                        variant="destructive"
-                                        className="h-full"
-                                        onClick={handleDelete}
-                                        disabled={isLoading}
-                                    >
-                                        Confirm Delete
-                                    </Button>
-                                </div>
-                            </DialogHeader>
-                        </DialogContent>
-                    </Dialog>
-                )}
-            </div>
+            {owner && (
+                <div className="flex items-center gap-x-3 justify-end">
+                    <Avatar>
+                        <AvatarImage src={`http://localhost:4000/${owner?.picture}`} />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <Link to={`/user/${owner?._id}`} className=" text-gray-500 text-center">
+                        {owner?.username}
+                    </Link>
+                </div>
+            )}
         </div>
     )
 }

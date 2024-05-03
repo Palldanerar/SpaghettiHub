@@ -10,9 +10,9 @@ import { useGetUserDetailsQuery } from './redux/slices/api'
 import { useDispatch } from 'react-redux'
 import { updateCurrentUser, updateIsLoggedIn } from './redux/slices/AppSlice'
 import { useEffect } from 'react'
-import AllCodes from './pages/AllCodes'
 import MyCodes from './pages/MyCodes'
 import Profile from './pages/Profile'
+import User from './pages/User'
 const App = () => {
 
   // @ts-ignore
@@ -39,10 +39,10 @@ const App = () => {
           <Route path='/editor/:id' element={<Editor />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path='/all-codes' element={<AllCodes />} />
           <Route path='/my-codes' element={<MyCodes />} />
           <Route path="*" element={<NotFound />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/user/:id' element={<User />} />
         </Routes>
       </ThemeProvider>
     </>

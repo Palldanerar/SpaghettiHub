@@ -148,20 +148,13 @@ export const userDetails = async (req: AuthRequest, res: Response) => {
 
 export const updateProfile = async (req: AuthRequest, res: Response) => {
     const userId = req._id;
-
-    console.log(userId)
-
     const { username, bio } = req.body;
     // @ts-ignore
     const avatar = req?.file.path;
 
-    console.log(avatar)
-
     try {
 
         let user = await User.findById(userId);
-
-        console.log(user)
 
         if (!user) {
             return res.status(404).send({ message: "Cannot find the user!" });
@@ -169,7 +162,7 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
 
         await User.updateOne({
             _id: userId
-        },{
+        }, {
             username,
             bio,
             picture: avatar,
@@ -178,6 +171,29 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
         user = await User.findById(userId);
 
         return res.status(200).send(user);
+    } catch (error) {
+        return res.status(500).send({ message: "Cannot fetch user details" });
+    }
+}
+
+export const getUser = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        const user = await User.findById(id).populate({
+            path: "savedCodes",
+            options: { sort: { createdAt: -1 } },
+        });
+        if (!user) {
+            return res.status(404).send({ message: "Cannot find the user!" });
+        }
+        return res.status(200).send({
+            username: user.username,
+            picture: user.picture,
+            email: user.email,
+            savedCodes: user.savedCodes,
+            bio: user.bio
+        });
     } catch (error) {
         return res.status(500).send({ message: "Cannot fetch user details" });
     }

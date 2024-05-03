@@ -58,7 +58,7 @@ export const loadCode = async (req: AuthRequest, res: Response) => {
         }
 
         const user = await User.findById(userId);
-        
+
         if (user?.username === existingCode.ownerName) {
             isOwner = true;
         }
@@ -88,7 +88,10 @@ export const getMyCodes = async (req: AuthRequest, res: Response) => {
 
 export const getAllCodes = async (req: Request, res: Response) => {
     try {
-        const allCodes = await Code.find().sort({ createdAt: -1 });
+        const allCodes = await Code.find().populate({
+            path: "ownerInfo",
+            options: { sort: { createdAt: -1 } }
+        })
         return res.status(200).send(allCodes);
     } catch (error) {
         return res.status(500).send({ message: "Error editing code!", error });

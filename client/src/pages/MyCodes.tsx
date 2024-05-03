@@ -12,6 +12,7 @@ const myCodes = () => {
     },
     _id: string,
     title: string,
+    ownerInfo: Object,
   }
 
   //@ts-ignore
@@ -20,7 +21,7 @@ const myCodes = () => {
   return myCodes?.length !== 0 ? (
     <div className="p-3 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
       {myCodes?.map((item: MyCodesItem) => {
-        return <CodeItem isDelete={true} title={item.title} _id={item._id} />;
+        return <CodeItem title={item.title} _id={item._id} owner={item.ownerInfo} />;
       })}
     </div>
   ) : (
