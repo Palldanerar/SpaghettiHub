@@ -45,6 +45,11 @@ const Header = () => {
         {isLoggedIn ? (
           <>
             <li>
+            <Link to="/room">
+            <Button variant="secondary">Create room</Button>
+          </Link>
+            </li>
+            <li>
               <Button onClick={handleLogout} disabled={isLoading} variant="destructive">
                 Logout
               </Button>

@@ -13,6 +13,7 @@ import { useEffect } from 'react'
 import MyCodes from './pages/MyCodes'
 import Profile from './pages/Profile'
 import User from './pages/User'
+import Room from './pages/Room'
 const App = () => {
 
   // @ts-ignore
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/user/:id' element={<User />} />
+          <Route path='/room' element={<Room />} />
         </Routes>
       </ThemeProvider>
     </>

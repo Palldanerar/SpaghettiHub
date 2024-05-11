@@ -10,7 +10,14 @@ import { updateFullCode, updateIsOwner } from '@/redux/slices/CodeSlices'
 import { useLoadCodeMutation } from '@/redux/slices/api'
 import Loader from '@/components/Loaders/Loader'
 
+
 const Editor = () => {
+
+  const initState = {
+    html: "",
+    css: "",
+    javascript: "",
+  }
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -35,14 +42,9 @@ const Editor = () => {
     if (id) {
       loadCode();
     }
-  }, [id]);
 
-  if (isLoading)
-    return (
-      <div className="w-full h-[calc(100dvh-60px)] flex justify-center items-center">
-        <Loader />
-      </div>
-    );
+    dispatch(updateFullCode(initState));
+  }, [id]);
 
   return (
     <ResizablePanelGroup direction="horizontal">
