@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <div className="w-full h-[calc(100dvh-60px)]">
       <div className='p-3'>
-        <Input placeholder='Search' value={search} onChange={(e) => setSearch(e.target.value)} />
+        <Input placeholder='Поиск...' value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <div>
         {searchCode() ? (
@@ -44,7 +44,7 @@ const Home = () => {
           </div>
         ) : (
           <p className="block w-full text-slate-500 font-mono text-center p-3">
-            No Codes Found!
+            Пусто!
           </p>
         )}
       </div>

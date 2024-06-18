@@ -46,8 +46,7 @@ const Login = () => {
         <div className="__login grid-bg w-full h-[calc(100dvh-60px)] flex justify-center items-center flex-col gap-3">
             <div className="__form_container bg-black border-[1px] py-8 px-4 flex flex-col gap-5 w-[300px] rounded-lg">
                 <div className="">
-                    <h1 className="font-mono text-4xl font-bold text-left">Login</h1>
-                    <p className="font-mono text-xs">Welcome back fellow coder</p>
+                    <h1 className="font-mono text-4xl font-bold text-left">Вход</h1>
                 </div>
                 <Form {...form}>
                     <form
@@ -62,7 +61,7 @@ const Login = () => {
                                     <FormControl>
                                         <Input
                                             required
-                                            placeholder="Username or Email"
+                                            placeholder="Username или Email"
                                             {...field}
                                             disabled={isLoading}
                                         />
@@ -80,7 +79,7 @@ const Login = () => {
                                         <Input
                                             required
                                             type="password"
-                                            placeholder="Password"
+                                            placeholder="Пароль"
                                             {...field}
                                             disabled={isLoading}
                                         />
@@ -90,14 +89,14 @@ const Login = () => {
                             )}
                         />
                         <Button className="w-full" type="submit" disabled={isLoading}>
-                            Login
+                            Войти
                         </Button>
                     </form>
                 </Form>
                 <small className="text-xs font-mono">
-                    Don't have an account?{" "}
+                    Нет аккаунта?{" "}
                     <Link className=" text-blue-500" to="/signup">
-                        Signup
+                        Регистрация
                     </Link>
                     .
                 </small>

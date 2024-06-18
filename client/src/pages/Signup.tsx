@@ -39,7 +39,7 @@ const Signup = () => {
             const response = await signup(value).unwrap()
             dispatch(updateCurrentUser(response))
             dispatch(updateIsLoggedIn(true))
-            navigate("/")
+            navigate("/profile")
         } catch (error) {
             handleError(error);
         }
@@ -49,10 +49,7 @@ const Signup = () => {
         <div className="__signup grid-bg w-full h-[calc(100dvh-60px)] flex justify-center items-center flex-col gap-3">
             <div className="__form_container bg-black border-[1px] py-8 px-4 flex flex-col gap-5 w-[300px] rounded-lg">
                 <div className="">
-                    <h1 className="font-mono text-4xl font-bold text-left">Signup</h1>
-                    <p className=" font-mono text-xs">
-                        Join the community of expert frontend developers.
-                    </p>
+                    <h1 className="font-mono text-4xl font-bold text-left">Регистрация</h1>
                 </div>
                 <Form {...form}>
                     <form
@@ -101,7 +98,7 @@ const Signup = () => {
                                         <Input
                                             disabled={isLoading}
                                             type="password"
-                                            placeholder="Password"
+                                            placeholder="Пароль"
                                             {...field}
                                         />
                                     </FormControl>
@@ -110,14 +107,14 @@ const Signup = () => {
                             )}
                         />
                         <Button className="w-full" type="submit" disabled={isLoading}>
-                            Signup
+                            Регистрация
                         </Button>
                     </form>
                 </Form>
                 <small className="text-xs font-mono">
-                    Already have an account?{" "}
+                    Есть аккаунт?{" "}
                     <Link className=" text-blue-500" to="/login">
-                        Login
+                        Войти
                     </Link>
                     .
                 </small>

@@ -27,7 +27,7 @@ const myCodes = () => {
   ) : (
     <>
       <p className="text-center font-mono text-slate-600 p-3">
-        You don't have any saved codes. <Link to="/editor">Create One</Link>
+        У Вас нет сохранённых сниппетов. <Link to="/editor">Создайте первый сниппет</Link>
       </p>
     </>
   );

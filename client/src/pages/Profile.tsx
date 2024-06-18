@@ -88,7 +88,7 @@ const Profile = () => {
                 </Dialog>
             </div>
             <div className="w-full overflow-auto">
-                <h2 className="text-center">Ваш код</h2>
+                <h2 className="text-center">Ваши сниппеты</h2>
                 {myCodes?.length !== 0 ? (
                     <div className="p-3 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
                         {myCodes?.map((item: MyCodesItem) => {
@@ -99,7 +99,7 @@ const Profile = () => {
                 ) : (
                     <>
                         <p className="text-center font-mono text-slate-600 p-3">
-                            You don't have any saved codes. <Link to="/editor">Create One</Link>
+                            У Вас нет сохранённых сниппетов. <Link to="/editor">Создайте первый сниппет</Link>
                         </p>
                     </>
                 )}

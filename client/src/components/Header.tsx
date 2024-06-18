@@ -39,19 +39,19 @@ const Header = () => {
       <ul className="flex gap-2">
         <li>
           <Link to="/editor">
-            <Button variant="secondary">Editor</Button>
+            <Button variant="secondary">Редактор</Button>
           </Link>
         </li>
         {isLoggedIn ? (
           <>
             <li>
             <Link to="/room">
-            <Button variant="secondary">Create room</Button>
+            <Button variant="secondary">Комната</Button>
           </Link>
             </li>
             <li>
               <Button onClick={handleLogout} disabled={isLoading} variant="destructive">
-                Logout
+                Выйти
               </Button>
             </li>
             <li>
@@ -69,12 +69,12 @@ const Header = () => {
           <>
             <li>
               <Link to="/login">
-                <Button variant="blue">Login</Button>
+                <Button variant="blue">Войти</Button>
               </Link>
             </li>
             <li>
               <Link to="/signup">
-                <Button variant="blue">Signup</Button>
+                <Button variant="blue">Регистрация</Button>
               </Link>
             </li>
           </>

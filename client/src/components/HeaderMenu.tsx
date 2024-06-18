@@ -41,7 +41,7 @@ const HeaderMenu = () => {
 
   const handleDownloadCode = () => {
     if (fullCode.html === "" && fullCode.css === "" && fullCode.javascript === "") {
-      toast.error("Error: Code is Empty");
+      toast.error("Редактор пуст!");
     } else {
       const htmlCode = new Blob([fullCode.html], { type: "text/html" });
       const cssCode = new Blob([fullCode.css], { type: "text/css" });
@@ -79,7 +79,7 @@ const HeaderMenu = () => {
       document.body.removeChild(cssLink);
       document.body.removeChild(javascriptLink);
 
-      toast.success("Code Downloaded Successfully!");
+      toast.success("Загрузка кода началась!");
     }
   }
 
@@ -87,7 +87,7 @@ const HeaderMenu = () => {
     try {
       if (id) {
         await editCode({ fullCode, id: id }).unwrap();
-        toast.success("Code Updated Successully!");
+        toast.success("Код успешно обновлён!");
       }
     } catch (error) {
       handleError(error);
@@ -116,12 +116,12 @@ const HeaderMenu = () => {
               <DialogHeader>
                 <DialogTitle className="flex gap-1 justify-center items-center">
                   <Code />
-                  Save your Code!
+                  Сохранение
                 </DialogTitle>
                 <div className="__url flex justify-center items-center gap-1">
                   <Input
                     className="bg-slate-700 focus-visible:ring-0"
-                    placeholder="Type your Post title"
+                    placeholder="Название..."
                     value={postTitle}
                     onChange={(e) => setPostTitle(e.target.value)}
                   />
@@ -176,7 +176,7 @@ const HeaderMenu = () => {
         )}
       </div>
       <div className='__tab_switcher flex justify-center items-center gap-1'>
-        <small>Current Language: </small>
+        <small>Редактор: </small>
         {/* @ts-ignore */}
         <Select defaultValue={currentLanguage} onValueChange={(value) => dispatch(updateCurrentLanguage(value))}>
           <SelectTrigger className="w-[120px] bg-gray-800 outline-none focus:ring-0">
