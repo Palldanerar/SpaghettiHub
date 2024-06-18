@@ -31,10 +31,11 @@ const UserSchema = new mongoose.Schema<IUserSchema>(
         bio: {
             type: String,
             trim: true,
+            default: "No bio",
         },
         picture: {
             type: String,
-            default: "uploads\avatars\default.jpg",
+            default: "uploads/avatars/default.jpg",
         },
         savedCodes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Code" }],
     },

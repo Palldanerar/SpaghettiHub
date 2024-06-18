@@ -3,8 +3,6 @@ import multer from "multer";
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
 
-        console.log(file)
-
         if (file.fieldname == "avatar") {
             cb(null, "./uploads/avatars");
         }

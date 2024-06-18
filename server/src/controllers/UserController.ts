@@ -149,8 +149,7 @@ export const userDetails = async (req: AuthRequest, res: Response) => {
 export const updateProfile = async (req: AuthRequest, res: Response) => {
     const userId = req._id;
     const { username, bio } = req.body;
-    // @ts-ignore
-    const avatar = req?.file.path;
+    const avatar = req?.file?.path;
 
     try {
 
@@ -160,13 +159,16 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
             return res.status(404).send({ message: "Cannot find the user!" });
         }
 
+
+        const updateUser = {
+            username: username || user.username,
+            bio: bio || user.bio,
+            picture: avatar || user.picture
+        }
+
         await User.updateOne({
             _id: userId
-        }, {
-            username,
-            bio,
-            picture: avatar,
-        })
+        }, updateUser)
 
         user = await User.findById(userId);
 

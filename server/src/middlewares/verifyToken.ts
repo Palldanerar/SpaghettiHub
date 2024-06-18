@@ -8,8 +8,6 @@ export interface AuthRequest extends Request {
 export const verifyToken = async (req: AuthRequest, res: Response, next: NextFunction) => {
     const token = req.cookies.token;
 
-    console.log(token)
-
     if (!token) {
         return res.status(401).send({ message: "You are unauthorized." });
     }
